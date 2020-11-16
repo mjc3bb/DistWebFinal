@@ -2,6 +2,18 @@
     margin: 10px 15%;
 }
 
-#b_save {
-    margin: 10px;
+#b_save, #b_cancel {
+    margin: 10px 5px;
+}
+
+.ql-toolbar.ql-snow {
+    border-radius: 4px 4px 0px 0px;
+}
+
+#editor {
+    border-radius: 0px 0px 4px 4px;
+}
+
+#pasta-name:hover {
+    text-decoration: underline;
 }

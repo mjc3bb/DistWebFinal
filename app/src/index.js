@@ -34,15 +34,18 @@ app.get('/pasta/:pastaID', async (req, res) => {
 })
 
 app.get('/pasta', async (req, res) => {
-    res.render("pasta-list")
+    const pastas = await Pasta.find({})
+    res.render("pasta-list", {pastas: JSON.stringify(pastas), pastasList: pastas})
 })
 
 app.post('/save', async (req, res) => {
-    const delta = req.body
+    const delta = req.body.delta
+    const name = req.body.name
     const _id = mongoose.Types.ObjectId();
     const p = new Pasta({
         _id,
         delta,
+        name,
     })
     await p.save()
     res.send( {id: _id})
