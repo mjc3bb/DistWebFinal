@@ -33,6 +33,10 @@ app.get('/pasta/:pastaID', async (req, res) => {
     res.render('pasta', { message: 'Hello there!', delta: JSON.stringify(p.delta)})
 })
 
+app.get('/pasta', async (req, res) => {
+    res.render("pasta-list")
+})
+
 app.post('/save', async (req, res) => {
     const delta = req.body
     const _id = mongoose.Types.ObjectId();
