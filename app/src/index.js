@@ -32,11 +32,11 @@ app.get('/', async (req, res) => {
 
 app.get('/pasta/:pastaID', async (req, res) => {
     const p = await Pasta.findById(req.params.pastaID).lean()
-    res.render('pasta', { message: 'Hello there!', delta: JSON.stringify(p.delta || ""), pasta: JSON.stringify(p || "") })
+    res.render('pasta', { message: 'Hello there!', delta: JSON.stringify(p.delta), pasta: JSON.stringify(p) })
 })
 
 app.get('/pasta', async (req, res) => {
-    const pastas = await Pasta.find({}).lean()
+    const pastas = await Pasta.find({}).sort({lastUpdated: -1}).lean()
     res.render("pasta-list", {pastas: JSON.stringify(pastas), pastasList: pastas})
 })
 
@@ -48,6 +48,8 @@ app.post('/save', async (req, res) => {
         _id,
         delta,
         name,
+        createdAt: new Date(Date.now()),
+        lastUpdated: new Date(Date.now()),
     })
     await p.save()
     res.send( {id: _id})
