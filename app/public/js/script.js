@@ -5,6 +5,8 @@ let renderQuill = () => {
     if (!!delta) {
         quill.setContents(delta)
     }
+    pasta_name.innerText = pasta.name
+    name_input.value = pasta.name
 }
 
 const saveFile = async () => {

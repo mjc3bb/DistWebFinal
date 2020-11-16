@@ -12,9 +12,11 @@ let connection = mongoose.connect("mongodb://root:example@mongo:27017/copypasta?
 mongoose.set('useCreateIndex', true)
 
 const Pasta = mongoose.model("Pasta", {
-    name: {type: String, default: ""},
+    name: {type: String, default: "Default Pasta Name"},
     language: {type: String, default: "Plain Text"},
     delta: Object,
+    createdAt: Date,
+    lastUpdated: Date,
 })
 
 app.set('views', './views')
@@ -25,16 +27,16 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 
 app.get('/', async (req, res) => {
-    res.render('pasta', { message: 'Hello there!'})
+    res.render('index', { message: 'Hello there!'})
 })
 
 app.get('/pasta/:pastaID', async (req, res) => {
     const p = await Pasta.findById(req.params.pastaID).lean()
-    res.render('pasta', { message: 'Hello there!', delta: JSON.stringify(p.delta)})
+    res.render('pasta', { message: 'Hello there!', delta: JSON.stringify(p.delta || ""), pasta: JSON.stringify(p || "") })
 })
 
 app.get('/pasta', async (req, res) => {
-    const pastas = await Pasta.find({})
+    const pastas = await Pasta.find({}).lean()
     res.render("pasta-list", {pastas: JSON.stringify(pastas), pastasList: pastas})
 })
 

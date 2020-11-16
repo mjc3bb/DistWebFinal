@@ -10,8 +10,12 @@ block body
         +nav_item("/pasta","active") Pastas
     div.mainCol
         ul
-            each val in pastasList
-                li= val.name || "Default Name"
+            if !pastasList.length
+                p No pastas
+            else
+                each val in pastasList
+                    li
+                        a(href="/pasta/"+val._id)= val.name
 
 
 block append scripts
